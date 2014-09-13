@@ -1,3 +1,83 @@
-<p>
-hello
+
+
+<!DOCTYPE html>
+<script language='javascript'>
+var entry = '\n';
+
+function trim(str) {
+	while (str.substr(0, str.length) == entry) {
+		str = str.substr(0, str.length-1);
+	}
+	while (str.substr(0, 1) == entry) {
+		str = str.substr(1, str.length);
+	}
+	return str;
+}
+function doAllot(f) {
+	var ary = new Array();
+
+	// 設定每支籤
+	var lst = trim(f.lst.value);
+	var i = 0;
+	while (lst.indexOf(entry)>0) {
+		p = lst.indexOf(entry);
+		ary[i++] = lst.substr(0, p);
+		lst = lst.substr(p+1, lst.length);
+	}
+	ary[i] = lst;
+
+	// 抽籤
+	var result = '';
+	var len = ary.length-1;
+	var count = Math.min(Math.max(1, f.count.value), ary.length);
+	for(i=0; i<count; i++) {
+		var choice = Math.round(Math.random()*len);
+		result += (i+1) + ') ' + ary[choice] + entry;
+		ary[choice] = ary[len];
+		len--;
+	}
+
+	f.count.value  = count;
+	f.result.value = result;
+	return false;
+}
+</script>
+
+<!-- BEGIN --- for 中橫健行隊‧行銷 -->
+<!--
+<p align="right">
+<font color="red" size="+2" style="background-color: yellow">報名即將額滿！</font><a href='http://skyhike.tw/?page_id=1244' target='skyhike'>《點這裡，搶報名，看簡章》</a>
+<br><font color="red">錯過再等半年！</font><font color='brown'><b>103年暑期「中橫健行隊」即日起開始報名</b></font>
 </p>
+-->
+<!-- END --- for 中橫健行隊‧行銷 -->
+
+<font color='#EF0000'>抽籤程式</font>
+<form name='fm' onsubmit='return doAllot(document.fm)'>
+	要抽出的數量：<input type='text' name='count' size='3' maxlength='3' value='3'>
+
+<br>設定籤筒的內容：（換行表示為另一支籤）<br>
+<textarea name='lst' rows='9' cols='40'>王昭君
+西施
+陳圓圓
+楊玉環
+趙飛燕</textarea>
+	<br>
+	<input type='Submit' value='Do!'>
+	<input type='Reset' value='Reset'>
+
+	<br><br>結果：<br>
+	<textarea name='result' rows='9' cols='40'></textarea>
+</form>
+
+<hr>
+作者：Dana (cowwu@ms15.hinet.net) 2005/02/09
+<br>本文章公開於個人網站 http://www.dana.idv.tw
+
+<hr><a href='../../index.htm'>Home</a>
+<font style='font-size:9px; font-family:Arial;'>
+	Copyright &copy; <u>Shu-Chen Wu</u>
+</font>
+
+</body>
+</html>
